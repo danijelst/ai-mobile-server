@@ -91,14 +91,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.webkit.WebViewAssetLoader
-import com.server.edge.gallery.GalleryEvent
 import com.server.edge.gallery.R
 import com.server.edge.gallery.data.ConfigKeys
 import com.server.edge.gallery.data.ModelDownloadStatusType
 import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.data.ValueType
 import com.server.edge.gallery.data.convertValueToTargetType
-import com.server.edge.gallery.firebaseAnalytics
 import com.server.edge.gallery.ui.common.chat.ChatMessageText
 import com.server.edge.gallery.ui.common.chat.ChatMessageWarning
 import com.server.edge.gallery.ui.common.chat.ChatSide
@@ -397,14 +395,6 @@ fun MainUi(
           },
         )
       }
-
-      firebaseAnalytics?.logEvent(
-        GalleryEvent.GENERATE_ACTION.id,
-        Bundle().apply {
-          putString("capability_name", task.id)
-          putString("model_id", model.name)
-        },
-      )
     }
   }
 

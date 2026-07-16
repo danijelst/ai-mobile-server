@@ -103,11 +103,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.server.edge.gallery.GalleryEvent
 import com.server.edge.gallery.R
 import com.server.edge.gallery.common.clearFocusOnKeyboardDismiss
 import com.server.edge.gallery.data.MAX_RECOMMENDED_SKILL_COUNT
-import com.server.edge.gallery.firebaseAnalytics
 import com.server.edge.gallery.proto.Skill
 import com.server.edge.gallery.ui.common.FloatingBanner
 import com.server.edge.gallery.ui.theme.customColors
@@ -970,13 +968,6 @@ private fun AddSkillOptionsBottomSheet(
               Modifier.fillMaxWidth()
                 .clickable {
                   onOptionSelected(option)
-                  firebaseAnalytics?.logEvent(
-                    GalleryEvent.BUTTON_CLICKED.id,
-                    Bundle().apply {
-                      putString("event_type", "agent_skills_add_skill")
-                      putString("button_id", option.type.toString())
-                    },
-                  )
                   onDismiss()
                 }
                 .padding(horizontal = 16.dp, vertical = 8.dp)

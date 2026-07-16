@@ -113,11 +113,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.server.edge.gallery.GalleryEvent
 import com.server.edge.gallery.R
-import com.server.edge.gallery.data.ModelDownloadStatusType
+import com.server.edge.gallery.data.ConfigKeys
 import com.server.edge.gallery.data.Task
-import com.server.edge.gallery.firebaseAnalytics
 import com.server.edge.gallery.ui.common.MarkdownText
 import com.server.edge.gallery.ui.common.chat.ChatMessageWarning
 import com.server.edge.gallery.ui.common.chat.MessageBodyLoading
@@ -407,14 +405,6 @@ fun MainUi(
           // Show error dialog for users to reset the engine.
           errorDialogContent = error
           showErrorDialog = true
-        },
-      )
-
-      firebaseAnalytics?.logEvent(
-        GalleryEvent.GENERATE_ACTION.id,
-        Bundle().apply {
-          putString("capability_name", task.id)
-          putString("model_id", model.name)
         },
       )
     }

@@ -19,7 +19,6 @@ package com.server.edge.gallery
 import android.app.Application
 import com.server.edge.gallery.data.DataStoreRepository
 import com.server.edge.gallery.ui.theme.ThemeSettings
-import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -33,7 +32,5 @@ class GalleryApplication : Application() {
 
     // Load saved theme.
     ThemeSettings.themeOverride.value = dataStoreRepository.readTheme()
-
-    FirebaseApp.initializeApp(this)
   }
 }
