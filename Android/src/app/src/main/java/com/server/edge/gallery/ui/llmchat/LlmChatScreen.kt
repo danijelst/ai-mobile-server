@@ -35,14 +35,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.server.edge.gallery.GalleryEvent
 import com.server.edge.gallery.R
 import com.server.edge.gallery.data.BuiltInTaskId
 import com.server.edge.gallery.data.Model
 import com.server.edge.gallery.data.ModelCapability
 import com.server.edge.gallery.data.RuntimeType
 import com.server.edge.gallery.data.Task
-import com.server.edge.gallery.firebaseAnalytics
 import com.server.edge.gallery.ui.common.chat.ChatMessageAudioClip
 import com.server.edge.gallery.ui.common.chat.ChatMessageImage
 import com.server.edge.gallery.ui.common.chat.ChatMessageText
@@ -262,20 +260,8 @@ fun ChatViewWrapper(
           TAG,
           "Analytics: generate_action, capability_name=${task.id}, active_skills=${activeSkills.joinToString(",")}",
         )
-        firebaseAnalytics?.logEvent(
-          GalleryEvent.GENERATE_ACTION.id,
-          Bundle().apply {
-            putString("capability_name", task.id)
-            putString("model_id", model.name)
-            putBoolean("has_image", images.isNotEmpty())
-            putInt("image_count", images.size)
-            putBoolean("has_audio", audioMessages.isNotEmpty())
-            putInt("audio_count", audioMessages.size)
-            putInt("active_skills_count", activeSkills.size)
-            putString("active_skills_list", activeSkills.joinToString(","))
-          },
-        )
       }
+    }
     },
     onRunAgainClicked = { model, message ->
       if (message is ChatMessageText) {

@@ -64,7 +64,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.server.edge.gallery.GalleryEvent
 import com.server.edge.gallery.R
 import com.server.edge.gallery.data.Accelerator
 import com.server.edge.gallery.data.Config
@@ -75,7 +74,6 @@ import com.server.edge.gallery.data.NumberSliderConfig
 import com.server.edge.gallery.data.SegmentedButtonConfig
 import com.server.edge.gallery.data.ValueType
 import com.server.edge.gallery.data.convertValueToTargetType
-import com.server.edge.gallery.firebaseAnalytics
 import com.server.edge.gallery.ui.common.ConfigEditorsPanel
 import com.server.edge.gallery.ui.common.SMALL_BUTTON_CONTENT_PADDING
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
@@ -240,13 +238,6 @@ fun BenchmarkScreen(
               enabled = filteredResults.isNotEmpty(),
               onClick = {
                 viewModel.setShowResultsViewer(showResultsViewer = true)
-                firebaseAnalytics?.logEvent(
-                  GalleryEvent.BUTTON_CLICKED.id,
-                  Bundle().apply {
-                    putString("event_type", "view_benchmark_results")
-                    putString("model_id", selectedModelName)
-                  },
-                )
               },
               modifier = Modifier.weight(1f),
             ) {
@@ -311,13 +302,6 @@ fun BenchmarkScreen(
               prefillTokens = getIntConfigValue(values = values, key = ConfigKeys.PREFILL_TOKENS),
               decodeTokens = getIntConfigValue(values = values, key = ConfigKeys.DECODE_TOKENS),
               runCount = getIntConfigValue(values = values, key = ConfigKeys.NUMBER_OF_RUNS),
-            )
-            firebaseAnalytics?.logEvent(
-              GalleryEvent.BUTTON_CLICKED.id,
-              Bundle().apply {
-                putString("event_type", "run_benchmark")
-                putString("model_id", selectedModelName)
-              },
             )
             showRunBenchmarkConfirmationDialog = false
           },

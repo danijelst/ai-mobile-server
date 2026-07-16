@@ -39,9 +39,7 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.server.edge.gallery.AppLifecycleProvider
-import com.server.edge.gallery.GalleryEvent
 import com.server.edge.gallery.R
-import com.server.edge.gallery.firebaseAnalytics
 import com.server.edge.gallery.worker.DownloadWorker
 import java.util.UUID
 import java.util.concurrent.Executors
@@ -182,10 +180,6 @@ class DefaultDownloadRepository(
             downloadStartTimeSharedPreferences.edit {
               putLong(model.name, System.currentTimeMillis())
             }
-            firebaseAnalytics?.logEvent(
-              GalleryEvent.MODEL_DOWNLOAD.id,
-              bundleOf("event_type" to "start", "model_id" to model.name),
-            )
           }
 
           WorkInfo.State.RUNNING -> {
@@ -227,14 +221,6 @@ class DefaultDownloadRepository(
 
             val startTime = downloadStartTimeSharedPreferences.getLong(model.name, 0L)
             val duration = System.currentTimeMillis() - startTime
-            firebaseAnalytics?.logEvent(
-              GalleryEvent.MODEL_DOWNLOAD.id,
-              bundleOf(
-                "event_type" to "success",
-                "model_id" to model.name,
-                "duration_ms" to duration,
-              ),
-            )
             downloadStartTimeSharedPreferences.edit { remove(model.name) }
             removeObserver()
           }
@@ -265,14 +251,6 @@ class DefaultDownloadRepository(
             val startTime = downloadStartTimeSharedPreferences.getLong(model.name, 0L)
             val duration = System.currentTimeMillis() - startTime
             // TODO: Add failure reasons
-            firebaseAnalytics?.logEvent(
-              GalleryEvent.MODEL_DOWNLOAD.id,
-              bundleOf(
-                "event_type" to "failure",
-                "model_id" to model.name,
-                "duration_ms" to duration,
-              ),
-            )
             downloadStartTimeSharedPreferences.edit { remove(model.name) }
             removeObserver()
           }
