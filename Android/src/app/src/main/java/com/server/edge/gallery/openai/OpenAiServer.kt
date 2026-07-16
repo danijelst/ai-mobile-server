@@ -37,6 +37,15 @@ class OpenAiServer(
     private var server: EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration>? = null
     private val modelMutexes = ConcurrentHashMap<String, Mutex>()
 
+    private fun isAuthorized(call: ApplicationCall): Boolean {
+        val prefs = context.getSharedPreferences("openai_server_prefs", Context.MODE_PRIVATE)
+        if (!prefs.getBoolean("authorization_enabled", false)) return true
+        val token = prefs.getString("authorization_token", "").orEmpty()
+        if (token.isEmpty()) return true
+        val authHeader = call.request.headers[HttpHeaders.Authorization]
+        return authHeader == "Bearer $token"
+    }
+
     fun start(port: Int = 8080) {
         if (server != null) return
 
@@ -61,6 +70,10 @@ class OpenAiServer(
                 }
 
                 get("/v1/models") {
+                    if (!isAuthorized(call)) {
+                        call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Unauthorized"))
+                        return@get
+                    }
                     val models = modelManagerViewModel.uiState.value.tasks
                         .flatMap { it.models }
                         .filter { it.runtimeType == RuntimeType.LITERT_LM && it.instance != null }
@@ -72,6 +85,10 @@ class OpenAiServer(
 
                 get("/v1/models/{modelId}") {
                     val modelId = call.parameters["modelId"]
+                    if (!isAuthorized(call)) {
+                        call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Unauthorized"))
+                        return@get
+                    }
                     val model = modelManagerViewModel.uiState.value.tasks
                         .flatMap { it.models }
                         .find { it.name == modelId && it.runtimeType == RuntimeType.LITERT_LM && it.instance != null }
@@ -84,11 +101,19 @@ class OpenAiServer(
                 }
 
                 post("/v1/chat/completions") {
+                    if (!isAuthorized(call)) {
+                        call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Unauthorized"))
+                        return@post
+                    }
                     val request = call.receive<ChatCompletionRequest>()
                     handleChatCompletion(call, request)
                 }
 
                 post("/v1/completions") {
+                    if (!isAuthorized(call)) {
+                        call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Unauthorized"))
+                        return@post
+                    }
                     val request = call.receive<CompletionRequest>()
                     handleCompletion(call, request)
                 }
