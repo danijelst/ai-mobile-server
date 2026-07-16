@@ -17,6 +17,10 @@ object OpenAiServerState {
     private const val KEY_NGROK_AUTH_TOKEN = "ngrok_auth_token"
     private const val KEY_NGROK_DOMAIN = "ngrok_domain"
 
+    // Authorization
+    private const val KEY_AUTHORIZATION_ENABLED = "authorization_enabled"
+    private const val KEY_AUTHORIZATION_TOKEN = "authorization_token"
+
     var modelManagerViewModel: ModelManagerViewModel? = null
 
     private val _isRunning = MutableStateFlow(false)
@@ -33,6 +37,12 @@ object OpenAiServerState {
 
     private val _tunnelProvider = MutableStateFlow(TUNNEL_PROVIDER_NGROK)
     val tunnelProvider = _tunnelProvider.asStateFlow()
+
+    private val _isAuthorizationRequired = MutableStateFlow(false)
+    val isAuthorizationRequired = _isAuthorizationRequired.asStateFlow()
+
+    private val _authorizationToken = MutableStateFlow("")
+    val authorizationToken = _authorizationToken.asStateFlow()
 
     private val _openServerScreenRequest = MutableStateFlow(0L)
     val openServerScreenRequest = _openServerScreenRequest.asStateFlow()
@@ -56,6 +66,37 @@ object OpenAiServerState {
         if (!enabled) {
             _publicUrl.value = null
         }
+    }
+
+    fun isAuthorizationEnabled(): Boolean = _isAuthorizationRequired.value
+
+    fun getAuthorizationToken(): String = _authorizationToken.value
+
+    fun loadAuthorizationPreference(context: Context) {
+        val prefs =
+            context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        _isAuthorizationRequired.value =
+            prefs.getBoolean(KEY_AUTHORIZATION_ENABLED, false)
+        _authorizationToken.value =
+            prefs.getString(KEY_AUTHORIZATION_TOKEN, "").orEmpty()
+    }
+
+    fun persistAuthorizationEnabled(context: Context, enabled: Boolean) {
+        context.applicationContext
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(KEY_AUTHORIZATION_ENABLED, enabled)
+            .apply()
+        _isAuthorizationRequired.value = enabled
+    }
+
+    fun persistAuthorizationToken(context: Context, token: String) {
+        context.applicationContext
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(KEY_AUTHORIZATION_TOKEN, token.trim())
+            .apply()
+        _authorizationToken.value = token.trim()
     }
 
     fun loadTunnelPreference(context: Context) {

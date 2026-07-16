@@ -39,6 +39,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
@@ -59,6 +61,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -104,12 +107,14 @@ fun ServerScreen(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(context) {
         OpenAiServerState.loadTunnelPreference(context)
+        OpenAiServerState.loadAuthorizationPreference(context)
     }
     val isRunning by OpenAiServerState.isRunning.collectAsState()
     val localUrl by OpenAiServerState.localUrl.collectAsState()
     val publicUrl by OpenAiServerState.publicUrl.collectAsState()
     val isTunnelEnabled by OpenAiServerState.isTunnelEnabled.collectAsState()
     val tunnelProvider by OpenAiServerState.tunnelProvider.collectAsState()
+    val isAuthorizationRequired by OpenAiServerState.isAuthorizationRequired.collectAsState()
     var enableTunnel by remember(isTunnelEnabled) { mutableStateOf(isTunnelEnabled) }
     var selectedProvider by remember(tunnelProvider) { mutableStateOf(tunnelProvider) }
 
@@ -117,6 +122,7 @@ fun ServerScreen(modifier: Modifier = Modifier) {
     var cfUrl by remember { mutableStateOf(OpenAiServerState.cloudflarePublicUrl(context)) }
     var ngrokToken by remember { mutableStateOf(OpenAiServerState.ngrokAuthToken(context)) }
     var ngrokDomain by remember { mutableStateOf(OpenAiServerState.ngrokDomain(context)) }
+    var authorizationTokenValue by remember { mutableStateOf(OpenAiServerState.getAuthorizationToken()) }
 
     var focusedField by remember { mutableStateOf<String?>(null) }
 
@@ -374,6 +380,114 @@ fun ServerScreen(modifier: Modifier = Modifier) {
                                 }
                             }
 
+                        }
+                    }
+                }
+            }
+        }
+
+        // Authorization Section
+        AnimatedVisibility(
+            visible = !isRunning,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically(),
+        ) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                ),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 14.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    // Authorization enable toggle
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            Icons.Outlined.Lock,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(20.dp),
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Autorisierung",
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
+                                text = "Bearer-Token für API-Zugriff verlangen",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(
+                            checked = isAuthorizationRequired,
+                            onCheckedChange = {
+                                OpenAiServerState.persistAuthorizationEnabled(context, it)
+                            },
+                        )
+                    }
+
+                    // Token input (visible when authorization is enabled)
+                    AnimatedVisibility(
+                        visible = isAuthorizationRequired,
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically(),
+                    ) {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(
+                                text = "Authorization Token",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                ServerScreenTextField(
+                                    value = authorizationTokenValue,
+                                    onValueChange = { newToken ->
+                                        authorizationTokenValue = newToken
+                                        OpenAiServerState.persistAuthorizationToken(context, newToken)
+                                    },
+                                    placeholder = "Bearer-Token eingeben…",
+                                    isFocused = focusedField == "authToken",
+                                    onFocusChanged = {
+                                        if (it) focusedField = "authToken"
+                                        else if (focusedField == "authToken") focusedField = null
+                                    },
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                FilledTonalButton(
+                                    onClick = {
+                                        val randomToken = generateRandomToken()
+                                        authorizationTokenValue = randomToken
+                                        OpenAiServerState.persistAuthorizationToken(context, randomToken)
+                                        Toast.makeText(context, "Token generiert", Toast.LENGTH_SHORT).show()
+                                    },
+                                ) {
+                                    Icon(
+                                        Icons.Default.Refresh,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(16.dp),
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text("Zufällig")
+                                }
+                            }
+                            Text(
+                                text = "Clients müssen diesen Token im Authorization-Header senden: Authorization: Bearer ***",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                     }
                 }
@@ -912,4 +1026,9 @@ private fun ServerScreenTextField(
             }
         }
     }
+}
+
+private fun generateRandomToken(): String {
+    val chars = "abcdefghijklmnopqrstuvwxyz0123456789"
+    return (1..32).map { chars.random() }.joinToString("")
 }
