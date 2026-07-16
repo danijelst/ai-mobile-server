@@ -76,9 +76,9 @@ android {
     buildConfig = true
   }
 
-  packagingOptions.resources.pickFirsts.add("META-INF/INDEX.LIST")
-  packagingOptions.resources.pickFirsts.add("META-INF/io.netty.versions.properties")
-  packagingOptions.resources.pickFirsts.add("META-INF/okio.kotlin_module")
+  packagingOptions.pickFirsts.add("META-INF/INDEX.LIST")
+  packagingOptions.pickFirsts.add("META-INF/io.netty.versions.properties")
+  packagingOptions.pickFirsts.add("META-INF/okio.kotlin_module")
 }
 
 dependencies {
@@ -118,7 +118,6 @@ dependencies {
   implementation(libs.play.services.oss.licenses)
   implementation(libs.androidx.exifinterface)
   implementation(libs.moshi.kotlin)
-  implementation(libs.ktor.server.core)
   implementation(libs.ktor.server.core)
   implementation(libs.ktor.server.netty)
   implementation(libs.ktor.server.content.negotiation)
