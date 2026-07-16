@@ -259,7 +259,6 @@ fun HomeScreen(
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
           isGranted: Boolean ->
           if (isGranted) {
-            // FCM SDK (and your app) can post notifications.
           }
         }
 

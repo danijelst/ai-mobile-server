@@ -16,8 +16,6 @@
 
 plugins {
   alias(libs.plugins.android.application)
-  // Note: set apply to true to enable google-services (requires google-services.json).
-  // alias(libs.plugins.google.services) apply false
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
@@ -78,9 +76,9 @@ android {
     buildConfig = true
   }
 
-  packagingOptions.pickFirsts.add("META-INF/INDEX.LIST")
-  packagingOptions.pickFirsts.add("META-INF/io.netty.versions.properties")
-  packagingOptions.pickFirsts.add("META-INF/okio.kotlin_module")
+  packagingOptions.resources.pickFirsts.add("META-INF/INDEX.LIST")
+  packagingOptions.resources.pickFirsts.add("META-INF/io.netty.versions.properties")
+  packagingOptions.resources.pickFirsts.add("META-INF/okio.kotlin_module")
 }
 
 dependencies {
@@ -118,9 +116,9 @@ dependencies {
   implementation(libs.hilt.android)
   implementation(libs.hilt.navigation.compose)
   implementation(libs.play.services.oss.licenses)
-  implementation(libs.firebase.messaging)
   implementation(libs.androidx.exifinterface)
   implementation(libs.moshi.kotlin)
+  implementation(libs.ktor.server.core)
   implementation(libs.ktor.server.core)
   implementation(libs.ktor.server.netty)
   implementation(libs.ktor.server.content.negotiation)

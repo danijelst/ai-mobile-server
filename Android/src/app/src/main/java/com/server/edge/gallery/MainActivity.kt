@@ -81,14 +81,12 @@ class MainActivity : ComponentActivity() {
       com.server.edge.gallery.openai.OpenAiServerState.requestOpenServerScreen()
     }
 
-    // Debug: Dump all intent extras to see what FCM unloads
     intent.extras?.let { extras ->
       for (key in extras.keySet()) {
         Log.d(TAG, "onCreate Extra -> Key: $key, Value: ${extras.get(key)}")
       }
     }
 
-    // Convert FCM Console data extras to intent data for GalleryNavGraph to pick up
     intent.getStringExtra("deeplink")?.let { link ->
       Log.d(TAG, "onCreate: Found deeplink extra: $link")
       if (link.startsWith("http://") || link.startsWith("https://")) {
@@ -203,7 +201,6 @@ class MainActivity : ComponentActivity() {
       com.server.edge.gallery.openai.OpenAiServerState.requestOpenServerScreen()
     }
 
-    // Debug: Dump all intent extras to see what FCM unloads
     intent.extras?.let { extras ->
       for (key in extras.keySet()) {
         Log.d(TAG, "onNewIntent Extra -> Key: $key, Value: ${extras.get(key)}")
