@@ -80,7 +80,11 @@ android {
   packagingOptions.pickFirsts.add("META-INF/io.netty.versions.properties")
   packagingOptions.pickFirsts.add("META-INF/okio.kotlin_module")
 
-  jniLibs.useLegacyPackaging = true
+  packaging {
+    jniLibs {
+      useLegacyPackaging = true
+    }
+  }
 
   lint {
     disable += "BatteryLife"
