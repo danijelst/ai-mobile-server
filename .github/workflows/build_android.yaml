@@ -3,14 +3,8 @@ name: CI
 on:
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'Android/**'
-      - '.github/workflows/**'
   push:
     branches: [ "main" ]
-    paths:
-      - 'Android/**'
-      - '.github/workflows/**'
   workflow_dispatch:
 
 defaults:
