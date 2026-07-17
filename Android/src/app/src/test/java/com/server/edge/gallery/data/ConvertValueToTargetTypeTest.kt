@@ -96,7 +96,7 @@ class ConvertValueToTargetTypeTest {
 
     @Test
     fun `convert to DOUBLE from Float`() {
-        assertEquals(1.5, convertValueToTargetType(1.5f, ValueType.DOUBLE), 1e-10)
+        assertEquals(1.5, convertValueToTargetType(1.5f, ValueType.DOUBLE) as Double, 1e-10)
     }
 
     @Test
