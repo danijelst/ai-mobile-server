@@ -1,0 +1,66 @@
+version: 2
+
+updates:
+  # Gradle dependencies (Android, Kotlin, plugins, etc.)
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+
+    open-pull-requests-limit: 10
+
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+    labels:
+      - "dependencies"
+
+    groups:
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+
+      androidx:
+        patterns:
+          - "androidx*"
+
+      google:
+        patterns:
+          - "com.google*"
+
+      firebase:
+        patterns:
+          - "com.google.firebase*"
+
+      square:
+        patterns:
+          - "com.squareup*"
+
+      test:
+        patterns:
+          - "*junit*"
+          - "*mock*"
+          - "*test*"
+          - "*espresso*"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:30"
+      timezone: "UTC"
+
+    open-pull-requests-limit: 5
+
+    commit-message:
+      prefix: "ci"
+
+    labels:
+      - "dependencies"
+      - "github-actions"
