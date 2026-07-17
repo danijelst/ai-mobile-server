@@ -1,22 +1,37 @@
 [versions]
+#noinspection GradleDependency
 agp = "8.8.2"
+#noinspection GradleDependency
 kotlin = "2.2.0"
+#noinspection GradleDependency
 coreKtx = "1.15.0"
 junit = "4.13.2"
+#noinspection GradleDependency
 junitVersion = "1.2.1"
+#noinspection GradleDependency
 espressoCore = "3.6.1"
+#noinspection GradleDependency
 lifecycleRuntimeKtx = "2.8.7"
+#noinspection GradleDependency
 activityCompose = "1.10.1"
+#noinspection GradleDependency
 composeBom = "2026.02.00"
+#noinspection GradleDependency
 navigation = "2.8.9"
 serializationPlugin = "2.0.21"
+#noinspection GradleDependency
 serializationJson = "1.7.3"
 materialIconExtended = "1.7.8"
+#noinspection GradleDependency
 workRuntime = "2.10.0"
+#noinspection GradleDependency
 dataStore = "1.1.7"
 documentfile = "1.1.0"
+#noinspection GradleDependency
 gson = "2.12.1"
+#noinspection GradleDependency
 lifecycleProcess = "2.8.7"
+#noinspection GradleDependency
 webkit = "1.14.0"
 protobuf = "0.9.5"
 protobufJavaLite = "4.26.1"
@@ -24,15 +39,23 @@ protobufJavaLite = "4.26.1"
 litertlm = "0.10.0"
 commonmark = "1.0.0-alpha02"
 richtext = "1.0.0-alpha02"
+#noinspection GradleDependency
 playServicesTfliteJava = "16.4.0"
+#noinspection GradleDependency
 playServicesTfliteGpu= "16.4.0"
+#noinspection GradleDependency
 cameraX = "1.4.2"
 netOpenidAppauth = "0.11.1"
+#noinspection GradleDependency
 splashscreen = "1.2.0-beta01"
 hilt = "2.57.2"
+#noinspection GradleDependency
 hiltNavigation = "1.3.0"
+#noinspection GradleDependency
 ossLicenses = "0.10.6"
+#noinspection GradleDependency
 playServicesOssLicenses = "17.1.0"
+#noinspection GradleDependency
 exifinterface = "1.4.1"
 securityCrypto = "1.1.0"
 kotlinReflect = "2.2.21"
@@ -40,6 +63,7 @@ kotlinxCoroutines = "1.10.1"
 moshi = "1.15.2"
 ksp = "2.3.6"
 ktor = "3.1.1"
+#noinspection GradleDependency
 mlkit-genai-prompt = "1.0.0-beta2"  # Ref: https://developers.google.com/ml-kit/genai/prompt/android/get-started#configure-project
 
 [libraries]

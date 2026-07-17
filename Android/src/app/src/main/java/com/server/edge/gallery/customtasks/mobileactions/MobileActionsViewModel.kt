@@ -342,8 +342,7 @@ constructor(@ApplicationContext private val appContext: Context) : ViewModel() {
   private fun sendEmail(context: Context, to: String, subject: String, body: String): String {
     val intent =
       Intent(Intent.ACTION_SEND).apply {
-        data = "mailto:".toUri()
-        type = "text/plain"
+        setDataAndType("mailto:".toUri(), "text/plain")
         putExtra(Intent.EXTRA_EMAIL, arrayOf(to))
         putExtra(Intent.EXTRA_SUBJECT, subject)
         putExtra(Intent.EXTRA_TEXT, body)

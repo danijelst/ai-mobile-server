@@ -45,8 +45,7 @@ object IntentHandler {
         if (params != null) {
           val intent =
             Intent(Intent.ACTION_SEND).apply {
-              data = "mailto:".toUri()
-              type = "text/plain"
+              setDataAndType("mailto:".toUri(), "text/plain")
               putExtra(Intent.EXTRA_EMAIL, arrayOf(params.extra_email))
               putExtra(Intent.EXTRA_SUBJECT, params.extra_subject)
               putExtra(Intent.EXTRA_TEXT, params.extra_text)

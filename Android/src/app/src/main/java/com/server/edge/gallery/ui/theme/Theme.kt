@@ -342,8 +342,6 @@ fun GalleryTheme(content: @Composable () -> Unit) {
   LaunchedEffect(darkTheme) {
     val window = (view.context as Activity).window
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      window.isNavigationBarContrastEnforced = false
-    }
+    window.isNavigationBarContrastEnforced = false
   }
 }

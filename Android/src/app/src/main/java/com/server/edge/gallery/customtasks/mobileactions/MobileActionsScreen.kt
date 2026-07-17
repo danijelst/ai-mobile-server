@@ -564,9 +564,9 @@ fun MainUi(
                   }
                 },
                 modifier = Modifier.weight(1f),
-              ) {
+              ) { targetState ->
                 // Model response.
-                if (selectedTabIndex == 0) {
+                if (targetState == 0) {
                   Column(modifier = Modifier.fillMaxWidth()) {
                     val cdResponse = stringResource(R.string.cd_model_response_text)
                     MarkdownText(
@@ -592,7 +592,7 @@ fun MainUi(
                   }
                 }
                 // Function called.
-                else if (selectedTabIndex == 1) {
+                else if (targetState == 1) {
                   Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp),

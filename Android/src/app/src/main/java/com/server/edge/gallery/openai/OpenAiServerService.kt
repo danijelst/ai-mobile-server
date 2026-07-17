@@ -44,11 +44,7 @@ class OpenAiServerService : Service() {
                 putExtra("use_tunnel", useTunnel)
                 putExtra("tunnel_provider", tunnelProvider)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
-            }
+            context.startForegroundService(intent)
         }
 
         fun stopService(context: Context) {
@@ -74,15 +70,11 @@ class OpenAiServerService : Service() {
             intent?.getStringExtra("tunnel_provider")
                 ?: OpenAiServerState.tunnelProvider.value
         createNotificationChannel()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(
-                NOTIFICATION_ID,
-                createNotification("Starting server..."),
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-            )
-        } else {
-            startForeground(NOTIFICATION_ID, createNotification("Starting server..."))
-        }
+        startForeground(
+            NOTIFICATION_ID,
+            createNotification("Starting server..."),
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
 
         serviceScope.launch {
             val local = getReachableLocalUrl() ?: "http://localhost:8080"
@@ -147,15 +139,13 @@ class OpenAiServerService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val serviceChannel = NotificationChannel(
-                CHANNEL_ID,
-                "OpenAI API Server Channel",
-                NotificationManager.IMPORTANCE_LOW
-            )
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(serviceChannel)
-        }
+        val serviceChannel = NotificationChannel(
+            CHANNEL_ID,
+            "OpenAI API Server Channel",
+            NotificationManager.IMPORTANCE_LOW
+        )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(serviceChannel)
     }
 
     private fun createNotification(content: String): Notification {

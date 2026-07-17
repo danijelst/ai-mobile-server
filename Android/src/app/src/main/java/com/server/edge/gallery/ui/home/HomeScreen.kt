@@ -96,9 +96,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -396,8 +396,8 @@ fun HomeScreen(
                       animationLabel = "bg star",
                     )
                   }
-                val configuration = LocalConfiguration.current
-                val screenWidth = configuration.screenWidthDp.dp
+                val screenWidth =
+                  with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
                 val targetWidth = screenWidth * 1.5f
                 Image(
                   painter = painterResource(id = R.drawable.bg_star),
@@ -547,7 +547,7 @@ private fun AppTitle(enableAnimation: Boolean) {
   val firstLineText = stringResource(R.string.app_name_first_part)
   val secondLineText = stringResource(R.string.app_name_second_part)
   val titleColor = MaterialTheme.customColors.appTitleGradientColors[1]
-  val screenWidthInDp = LocalConfiguration.current.screenWidthDp.dp
+  val screenWidthInDp = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
   val fontSize = with(LocalDensity.current) { (screenWidthInDp.toPx() * 0.12f).toSp() }
   val titleStyle = homePageTitleStyle.copy(fontSize = fontSize, lineHeight = fontSize)
 

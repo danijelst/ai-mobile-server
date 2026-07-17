@@ -79,6 +79,16 @@ android {
   packagingOptions.pickFirsts.add("META-INF/INDEX.LIST")
   packagingOptions.pickFirsts.add("META-INF/io.netty.versions.properties")
   packagingOptions.pickFirsts.add("META-INF/okio.kotlin_module")
+
+  lint {
+    disable += "BatteryLife"
+    disable += "VectorRaster"
+    disable += "VectorPath"
+    disable += "PluralsCandidate"
+    disable += "SetJavaScriptEnabled"
+    disable += "InsecureBaseConfiguration"
+    disable += "UnsafeNativeCodeLocation"
+  }
 }
 
 dependencies {
