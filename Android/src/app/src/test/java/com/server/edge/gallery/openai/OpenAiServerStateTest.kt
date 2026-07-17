@@ -182,7 +182,7 @@ class OpenAiServerStateTest {
     // ---- Tunnel Preferences ----
 
     @Test
-    fun `loadTunnelPreference loads enabled tunnel with ngrok provider`() {
+    fun `loadTunnelPreference loads enabled tunnel with ngrok provider`() = runTest {
         every { mockSharedPreferences.getBoolean("tunnel_enabled", true) } returns true
         every {
             mockSharedPreferences.getString("tunnel_provider", OpenAiServerState.TUNNEL_PROVIDER_NGROK)
@@ -195,7 +195,7 @@ class OpenAiServerStateTest {
     }
 
     @Test
-    fun `loadTunnelPreference loads disabled tunnel with cloudflare provider`() {
+    fun `loadTunnelPreference loads disabled tunnel with cloudflare provider`() = runTest {
         every { mockSharedPreferences.getBoolean("tunnel_enabled", true) } returns false
         every {
             mockSharedPreferences.getString("tunnel_provider", OpenAiServerState.TUNNEL_PROVIDER_NGROK)
@@ -208,7 +208,7 @@ class OpenAiServerStateTest {
     }
 
     @Test
-    fun `loadTunnelPreference defaults to ngrok when provider is invalid`() {
+    fun `loadTunnelPreference defaults to ngrok when provider is invalid`() = runTest {
         every { mockSharedPreferences.getBoolean("tunnel_enabled", true) } returns true
         every {
             mockSharedPreferences.getString("tunnel_provider", OpenAiServerState.TUNNEL_PROVIDER_NGROK)
@@ -220,7 +220,7 @@ class OpenAiServerStateTest {
     }
 
     @Test
-    fun `persistTunnelEnabled saves enabled and updates state`() {
+    fun `persistTunnelEnabled saves enabled and updates state`() = runTest {
         OpenAiServerState.persistTunnelEnabled(mockContext, enabled = true)
 
         verify { mockEditor.putBoolean("tunnel_enabled", true) }
@@ -241,7 +241,7 @@ class OpenAiServerStateTest {
     }
 
     @Test
-    fun `persistTunnelProvider saves ngrok and updates flow`() {
+    fun `persistTunnelProvider saves ngrok and updates flow`() = runTest {
         OpenAiServerState.persistTunnelProvider(mockContext, OpenAiServerState.TUNNEL_PROVIDER_NGROK)
 
         verify { mockEditor.putString("tunnel_provider", OpenAiServerState.TUNNEL_PROVIDER_NGROK) }
@@ -250,7 +250,7 @@ class OpenAiServerStateTest {
     }
 
     @Test
-    fun `persistTunnelProvider normalizes alternative values to cloudflare`() {
+    fun `persistTunnelProvider normalizes alternative values to cloudflare`() = runTest {
         OpenAiServerState.persistTunnelProvider(mockContext, "some_other_provider")
 
         verify {
@@ -266,7 +266,7 @@ class OpenAiServerStateTest {
     }
 
     @Test
-    fun `persistTunnelProvider preserves ngrok when explicitly set`() {
+    fun `persistTunnelProvider preserves ngrok when explicitly set`() = runTest {
         OpenAiServerState.persistTunnelProvider(mockContext, OpenAiServerState.TUNNEL_PROVIDER_NGROK)
 
         verify {
