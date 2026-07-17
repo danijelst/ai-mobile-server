@@ -115,6 +115,7 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.server.edge.gallery.R
 import com.server.edge.gallery.data.ConfigKeys
+import com.server.edge.gallery.data.ModelDownloadStatusType
 import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.ui.common.MarkdownText
 import com.server.edge.gallery.ui.common.chat.ChatMessageWarning
