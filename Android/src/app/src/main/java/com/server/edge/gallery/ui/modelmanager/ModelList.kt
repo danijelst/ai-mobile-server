@@ -22,6 +22,7 @@ package com.server.edge.gallery.ui.modelmanager
 // import com.server.edge.gallery.ui.theme.GalleryTheme
 
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -333,7 +334,7 @@ fun ModelList(
           }
 
           // Models available.
-          val resources = LocalContext.current.resources
+          val resources = LocalResources.current
           Text(
             resources.getQuantityString(
               R.plurals.model_list_number_of_models_available,

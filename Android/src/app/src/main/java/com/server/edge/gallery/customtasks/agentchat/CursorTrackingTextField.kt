@@ -48,11 +48,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CursorTrackingTextField(
-  @StringRes labelResId: Int? = null,
-  @StringRes supportingTextResId: Int? = null,
   initialValue: String,
   onValueChange: (String) -> Unit,
   modifier: Modifier = Modifier,
+  @StringRes labelResId: Int? = null,
+  @StringRes supportingTextResId: Int? = null,
   enabled: Boolean = true,
   minLines: Int = 1,
   extraOffset: Dp = 56.dp,

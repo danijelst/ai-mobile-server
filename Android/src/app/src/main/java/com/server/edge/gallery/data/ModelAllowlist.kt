@@ -80,17 +80,15 @@ data class AllowedModel(
     var sizeInBytes = sizeInBytes
 
     // Handle per-soc model files.
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-      if (socToModelFiles?.isNotEmpty() == true) {
-        socToModelFiles.get(SOC)?.let { info ->
-          Log.d(TAG, "Found soc-specific model files for model $name: $info")
-          version = info.commitHash ?: "-"
-          downloadedFileName = info.modelFile ?: "-"
-          downloadUrl =
-            info.url
-              ?: "https://huggingface.co/$modelId/resolve/${info.commitHash ?: "main"}/${info.modelFile}?download=true"
-          sizeInBytes = info.sizeInBytes ?: -1
-        }
+    if (socToModelFiles?.isNotEmpty() == true) {
+      socToModelFiles.get(SOC)?.let { info ->
+        Log.d(TAG, "Found soc-specific model files for model $name: $info")
+        version = info.commitHash ?: "-"
+        downloadedFileName = info.modelFile ?: "-"
+        downloadUrl =
+          info.url
+            ?: "https://huggingface.co/$modelId/resolve/${info.commitHash ?: "main"}/${info.modelFile}?download=true"
+        sizeInBytes = info.sizeInBytes ?: -1
       }
     }
 
