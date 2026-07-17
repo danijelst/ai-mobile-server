@@ -11,6 +11,10 @@ defaults:
   run:
     working-directory: ./Android/src
 
+env:
+  GRADLE_OPTS: -Dorg.gradle.parallel=true -Dorg.gradle.daemon=true -Dorg.gradle.jvmargs="-Xmx2g -Xms1g -XX:MaxMetaspaceSize=512m"
+  GRADLE_USER_HOME: ~/.gradle
+
 jobs:
   lint:
     name: Lint
@@ -43,6 +47,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Run unit tests
         run: ./gradlew test --continue --build-cache
+      - name: Generate coverage report
+        run: ./gradlew jacocoTestReport --build-cache
+      - name: Upload unit test coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: Android/src/app/build/reports/jacoco/
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
