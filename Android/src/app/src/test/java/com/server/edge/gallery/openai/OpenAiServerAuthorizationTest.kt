@@ -58,6 +58,7 @@ class OpenAiServerAuthorizationTest {
     fun `authorization check returns true when auth is disabled`() {
         // Simulate auth disabled
         every { mockSharedPreferences.getBoolean("authorization_enabled", false) } returns false
+        every { mockSharedPreferences.getString("authorization_token", "") } returns ""
         OpenAiServerState.loadAuthorizationPreference(mockContext)
 
         assertFalse("Auth should be disabled", OpenAiServerState.isAuthorizationEnabled())

@@ -252,9 +252,9 @@ class ChatSessionRepositoryTest {
         repository.deleteSession("1")
 
         // Verify final state
-        val jsonSlot = slot<String>()
-        verify { mockEditor.putString("chat_sessions", capture(jsonSlot)) }
-        val finalSessions = ChatSession.fromJson(jsonSlot.captured)
+        val jsonCaptures = mutableListOf<String>()
+        verify { mockEditor.putString("chat_sessions", capture(jsonCaptures)) }
+        val finalSessions = ChatSession.fromJson(jsonCaptures.last())
         assertEquals(1, finalSessions.size)
         assertEquals("Second", finalSessions[0].title)
     }
