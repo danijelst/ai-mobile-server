@@ -261,7 +261,6 @@ fun ChatViewWrapper(
           "Analytics: generate_action, capability_name=${task.id}, active_skills=${activeSkills.joinToString(",")}",
         )
       }
-    }
     },
     onRunAgainClicked = { model, message ->
       if (message is ChatMessageText) {
