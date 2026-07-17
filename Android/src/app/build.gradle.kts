@@ -76,13 +76,14 @@ android {
     buildConfig = true
   }
 
-  packagingOptions.resources.pickFirsts.add("META-INF/INDEX.LIST")
-  packagingOptions.resources.pickFirsts.add("META-INF/io.netty.versions.properties")
-  packagingOptions.resources.pickFirsts.add("META-INF/okio.kotlin_module")
+  packagingOptions.pickFirsts.add("META-INF/INDEX.LIST")
+  packagingOptions.pickFirsts.add("META-INF/io.netty.versions.properties")
+  packagingOptions.pickFirsts.add("META-INF/okio.kotlin_module")
 }
 
 dependencies {
   implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.documentfile)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
   implementation(platform(libs.androidx.compose.bom))
@@ -119,13 +120,15 @@ dependencies {
   implementation(libs.androidx.exifinterface)
   implementation(libs.moshi.kotlin)
   implementation(libs.ktor.server.core)
-  implementation(libs.ktor.server.core)
   implementation(libs.ktor.server.netty)
   implementation(libs.ktor.server.content.negotiation)
   implementation(libs.ktor.serialization.kotlinx.json)
   implementation(libs.ktor.server.cors)
   kapt(libs.hilt.android.compiler)
   testImplementation(libs.junit)
+  testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.mockk)
+  testImplementation(libs.turbine)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
   androidTestImplementation(platform(libs.androidx.compose.bom))

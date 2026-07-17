@@ -122,8 +122,6 @@
         </service>
 
         <service
-
-        <service
             android:name=".openai.OpenAiServerService"
             android:foregroundServiceType="dataSync"
             android:exported="false" />
@@ -132,8 +130,6 @@
             android:name=".worker.ModelKeepAliveService"
             android:foregroundServiceType="dataSync"
             android:exported="false" />
-
-        <meta-data
 
         <uses-native-library android:name="libvndksupport.so" android:required="false"/>
         <uses-native-library android:name="libOpenCL.so" android:required="false"/>

@@ -14,6 +14,7 @@ serializationJson = "1.7.3"
 materialIconExtended = "1.7.8"
 workRuntime = "2.10.0"
 dataStore = "1.1.7"
+documentfile = "1.1.0"
 gson = "2.12.1"
 lifecycleProcess = "2.8.7"
 webkit = "1.14.0"
@@ -35,6 +36,7 @@ playServicesOssLicenses = "17.1.0"
 exifinterface = "1.4.1"
 securityCrypto = "1.1.0"
 kotlinReflect = "2.2.21"
+kotlinxCoroutines = "1.10.1"
 moshi = "1.15.2"
 ksp = "2.3.6"
 ktor = "3.1.1"
@@ -47,6 +49,7 @@ ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-conte
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-server-cors = { group = "io.ktor", name = "ktor-server-cors", version.ref = "ktor" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -92,6 +95,11 @@ androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterfa
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 mlkit-genai-prompt = { group = "com.google.mlkit", name = "genai-prompt", version.ref = "mlkit-genai-prompt" }
+
+# Test dependencies
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+mockk = { module = "io.mockk:mockk", version = "1.13.14" }
+turbine = { module = "app.cash.turbine:turbine", version = "1.2.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
