@@ -59,6 +59,7 @@ android {
   buildTypes {
     debug {
       isMinifyEnabled = false
+      enableUnitTestCoverage = true
     }
     release {
       isMinifyEnabled = true
@@ -89,7 +90,7 @@ android {
     buildConfig = true
   }
 
-  packagingOptions.pickFirsts += listOf(
+  packagingOptions.resources.pickFirsts += listOf(
     "META-INF/INDEX.LIST",
     "META-INF/io.netty.versions.properties",
     "META-INF/okio.kotlin_module"
@@ -104,11 +105,11 @@ android {
     disable += "InsecureBaseConfiguration"
     disable += "UnsafeNativeCodeLocation"
   }
+}
 
-  coverage {
-    enableUnitTestCoverage = true
-    jacocoVersion = "0.8.12"
-  }
+// JaCoCo coverage configuration
+jacoco {
+  toolVersion = "0.8.12"
 }
 
 dependencies {
@@ -201,11 +202,11 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
 
   sourceDirectories.setFrom(files(mainSrc))
   classDirectories.setFrom(files(debugTree))
-  executionDirectories.setFrom(fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage")))
+  executionData.setFrom(fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage/debug")))
 
   doFirst {
-    executionDirectories.setFrom(
-      fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage"))
+    executionData.setFrom(
+      fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage/debug"))
     )
   }
 }
