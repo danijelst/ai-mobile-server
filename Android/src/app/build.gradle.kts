@@ -88,7 +88,7 @@ android {
     buildConfig = true
   }
 
-  packagingOptions.resources.pickFirsts += listOf(
+  packagingOptions.pickFirsts += listOf(
     "META-INF/INDEX.LIST",
     "META-INF/io.netty.versions.properties",
     "META-INF/okio.kotlin_module"
