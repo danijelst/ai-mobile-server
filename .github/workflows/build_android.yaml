@@ -21,11 +21,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '24'
+      - uses: gradle/actions/setup-gradle@v4
       - name: Run Android lint
-        run: ./gradlew lint
+        run: ./gradlew lint --build-cache
       - name: Upload lint report
         if: always()
         uses: actions/upload-artifact@v4
@@ -42,11 +40,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '24'
+      - uses: gradle/actions/setup-gradle@v4
       - name: Run unit tests
-        run: ./gradlew test --continue
+        run: ./gradlew test --continue --build-cache
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
@@ -64,11 +60,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '24'
+      - uses: gradle/actions/setup-gradle@v4
       - name: Assemble release
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease --build-cache
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:

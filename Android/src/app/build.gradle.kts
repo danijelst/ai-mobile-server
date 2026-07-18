@@ -69,16 +69,18 @@ android {
   }
   kotlinOptions {
     jvmTarget = "11"
-    freeCompilerArgs += "-Xcontext-receivers"
+    freeCompilerArgs += "-Xcontext-parameters"
   }
   buildFeatures {
     compose = true
     buildConfig = true
   }
 
-  packagingOptions.pickFirsts.add("META-INF/INDEX.LIST")
-  packagingOptions.pickFirsts.add("META-INF/io.netty.versions.properties")
-  packagingOptions.pickFirsts.add("META-INF/okio.kotlin_module")
+  packagingOptions.pickFirsts += listOf(
+    "META-INF/INDEX.LIST",
+    "META-INF/io.netty.versions.properties",
+    "META-INF/okio.kotlin_module"
+  )
 
   lint {
     disable += "BatteryLife"
