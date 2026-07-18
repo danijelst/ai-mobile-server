@@ -73,6 +73,7 @@ import com.server.edge.gallery.ui.modelmanager.ModelInitializationStatusType
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGChatView"
 
@@ -112,8 +113,8 @@ fun ChatView(
   sendMessageTrigger: SendMessageTrigger? = null,
   navigationIcon: @Composable (() -> Unit)? = null,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val selectedModel = modelManagerUiState.selectedModel
   val selectedModelInitializationStatus =
     modelManagerUiState.modelInitializationStatus[selectedModel.name]

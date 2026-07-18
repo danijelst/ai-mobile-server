@@ -46,6 +46,7 @@ import com.server.edge.gallery.R
 import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.ui.common.getTaskBgGradientColors
 import kotlin.coroutines.cancellation.CancellationException
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGHoldToDictate"
 
@@ -65,7 +66,7 @@ fun HoldToDictate(
   enabled: Boolean,
   modifier: Modifier = Modifier,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   var recordAudioPermissionGranted by remember { mutableStateOf(false) }
   val context = LocalContext.current
 

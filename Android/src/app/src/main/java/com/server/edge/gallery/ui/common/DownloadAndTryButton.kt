@@ -90,6 +90,7 @@ import java.net.HttpURLConnection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGDownloadAndTryButton"
 private const val SYSTEM_RESERVED_MEMORY_IN_BYTES = 3 * (1L shl 30)
@@ -402,7 +403,7 @@ fun DownloadAndTryButton(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
       ) {
-        val uiState = modelManagerViewModel.uiState.collectAsState().value
+        val uiState = modelManagerViewModel.uiState.collectAsStateWithLifecycle().value
         val isInitialized = uiState.isModelInitialized(model)
         val isInitializing = uiState.isModelInitializing(model)
         

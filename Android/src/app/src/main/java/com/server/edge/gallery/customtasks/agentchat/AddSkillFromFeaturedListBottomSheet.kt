@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.dp
 import com.server.edge.gallery.R
 import com.server.edge.gallery.data.AllowedSkill
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /** A ModalBottomSheet Composable for displaying and adding skills from a featured list. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,7 +84,7 @@ fun AddSkillFromFeatureListBottomSheet(
   var validatingSkills by remember { mutableStateOf(emptySet<String>()) }
   val uriHandler = LocalUriHandler.current
   val scope = rememberCoroutineScope()
-  val uiState by skillManagerViewModel.uiState.collectAsState()
+  val uiState by skillManagerViewModel.uiState.collectAsStateWithLifecycle()
   val addedSkillNames = remember(uiState.skills) { uiState.skills.map { it.skill.name }.toSet() }
 
   // Filter the featured skills based on the search query.

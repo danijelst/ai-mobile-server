@@ -109,6 +109,7 @@ import java.util.Locale
 import kotlin.math.abs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,7 +120,7 @@ fun BenchmarkResultsViewer(
   onClose: () -> Unit,
 ) {
   val scope = rememberCoroutineScope()
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   var showConfirmDeleteDialog by remember { mutableStateOf(false) }
   var showLazyListPlacementAnimation by remember { mutableStateOf(false) }
   var showBenchmarkComparisonHelpBottomSheet by remember { mutableStateOf(false) }

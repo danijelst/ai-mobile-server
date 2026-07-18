@@ -112,6 +112,7 @@ import java.security.MessageDigest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGTinyGarden"
 private const val ASSETS_BASE_URL = "https://appassets.androidplatform.net"
@@ -128,7 +129,7 @@ fun TinyGardenScreen(
   commandFlow: Flow<TinyGardenCommand>,
   viewModel: TinyGardenViewModel = hiltViewModel(),
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   var recordAudioPermissionGranted by remember { mutableStateOf(false) }
   val context = LocalContext.current
 
@@ -225,15 +226,15 @@ fun MainUi(
   commandFlow: Flow<TinyGardenCommand>,
   holdToDictateViewModel: HoldToDictateViewModel = hiltViewModel(),
 ) {
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val model = modelManagerUiState.selectedModel
   val initialModelConfigValues = remember(model) { model.configValues }
   var webViewRef: WebView? by remember { mutableStateOf(null) }
   val scope = rememberCoroutineScope()
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   var clearTextTrigger by remember { mutableLongStateOf(0L) }
   var curAmplitude by remember { mutableIntStateOf(0) }
-  val holdToDictateUiState by holdToDictateViewModel.uiState.collectAsState()
+  val holdToDictateUiState by holdToDictateViewModel.uiState.collectAsStateWithLifecycle()
   var showConversationHistoryPanel by remember { mutableStateOf(false) }
   var showErrorDialog by remember { mutableStateOf(false) }
   var errorDialogContent by remember { mutableStateOf("") }

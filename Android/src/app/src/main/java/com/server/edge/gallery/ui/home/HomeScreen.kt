@@ -132,6 +132,7 @@ import com.server.edge.gallery.ui.theme.customColors
 import com.server.edge.gallery.ui.theme.homePageTitleStyle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGHomeScreen"
 private const val TASK_COUNT_ANIMATION_DURATION = 250
@@ -166,7 +167,7 @@ fun HomeScreen(
   modifier: Modifier = Modifier,
   gm4: Boolean = false,
 ) {
-  val uiState by modelManagerViewModel.uiState.collectAsState()
+  val uiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   var showSettingsDialog by remember { mutableStateOf(false) }
   var showTosDialog by remember { mutableStateOf(!tosViewModel.getIsTosAccepted()) }
   val scope = rememberCoroutineScope()

@@ -41,6 +41,7 @@ import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.ui.common.DownloadAndTryButton
 import com.server.edge.gallery.ui.common.modelitem.calculateDownloadProgress
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ModelDownloadStatusInfoPanel(
@@ -48,7 +49,7 @@ fun ModelDownloadStatusInfoPanel(
   task: Task,
   modelManagerViewModel: ModelManagerViewModel,
 ) {
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
 
   // Manages the conditional display of UI elements (download model button and downloading
   // animation) based on the corresponding download status.

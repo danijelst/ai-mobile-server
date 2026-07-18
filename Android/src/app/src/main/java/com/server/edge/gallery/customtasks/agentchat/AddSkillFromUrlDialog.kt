@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.server.edge.gallery.R
 import java.net.URI
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private val APPROVED_SKILL_HOSTS = listOf("google-ai-edge.github.io")
 
@@ -65,7 +66,7 @@ fun AddSkillFromUrlDialog(
   onDismissRequest: () -> Unit,
   onSuccess: () -> Unit,
 ) {
-  val uiState by skillManagerViewModel.uiState.collectAsState()
+  val uiState by skillManagerViewModel.uiState.collectAsStateWithLifecycle()
   val validating = uiState.validating
   val validationError = uiState.validationError
 

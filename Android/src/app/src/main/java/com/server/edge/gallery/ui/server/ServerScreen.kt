@@ -99,6 +99,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -109,12 +110,12 @@ fun ServerScreen(modifier: Modifier = Modifier) {
         OpenAiServerState.loadTunnelPreference(context)
         OpenAiServerState.loadAuthorizationPreference(context)
     }
-    val isRunning by OpenAiServerState.isRunning.collectAsState()
-    val localUrl by OpenAiServerState.localUrl.collectAsState()
-    val publicUrl by OpenAiServerState.publicUrl.collectAsState()
-    val isTunnelEnabled by OpenAiServerState.isTunnelEnabled.collectAsState()
-    val tunnelProvider by OpenAiServerState.tunnelProvider.collectAsState()
-    val isAuthorizationRequired by OpenAiServerState.isAuthorizationRequired.collectAsState()
+    val isRunning by OpenAiServerState.isRunning.collectAsStateWithLifecycle()
+    val localUrl by OpenAiServerState.localUrl.collectAsStateWithLifecycle()
+    val publicUrl by OpenAiServerState.publicUrl.collectAsStateWithLifecycle()
+    val isTunnelEnabled by OpenAiServerState.isTunnelEnabled.collectAsStateWithLifecycle()
+    val tunnelProvider by OpenAiServerState.tunnelProvider.collectAsStateWithLifecycle()
+    val isAuthorizationRequired by OpenAiServerState.isAuthorizationRequired.collectAsStateWithLifecycle()
     var enableTunnel by remember(isTunnelEnabled) { mutableStateOf(isTunnelEnabled) }
     var selectedProvider by remember(tunnelProvider) { mutableStateOf(tunnelProvider) }
 

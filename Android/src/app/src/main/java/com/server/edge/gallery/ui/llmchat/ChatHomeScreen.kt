@@ -44,6 +44,7 @@ import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.emptyStateContent
 import com.server.edge.gallery.ui.theme.emptyStateTitle
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGChatHomeScreen"
 
@@ -64,7 +65,7 @@ fun ChatHomeScreen(
   var activeSessionId by remember { mutableStateOf(repository.getActiveChatId()) }
   var allowNextSessionRestoreForModelSelection by remember { mutableStateOf(false) }
 
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val selectedModel = modelManagerUiState.selectedModel
   val isSelectedModelInitialized =
     selectedModel.name != EMPTY_MODEL.name && modelManagerUiState.isModelInitialized(selectedModel)

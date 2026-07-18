@@ -97,6 +97,7 @@ import com.server.edge.gallery.ui.modelmanager.ModelInitializationStatusType
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.customColors
 import kotlinx.coroutines.delay
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /** Composable function for the main chat panel, displaying messages and handling user input. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -123,8 +124,8 @@ fun ChatPanel(
   emptyStateComposable: @Composable (Model) -> Unit = {},
   inputEnabled: Boolean = true,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val messages = uiState.messagesByModel[selectedModel.name] ?: listOf()
   val streamingMessage = uiState.streamingMessagesByModel[selectedModel.name]
   val snackbarHostState = remember { SnackbarHostState() }

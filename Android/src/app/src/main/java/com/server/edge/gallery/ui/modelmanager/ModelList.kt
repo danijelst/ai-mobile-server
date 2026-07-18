@@ -80,6 +80,7 @@ import com.server.edge.gallery.ui.common.modelitem.ModelItem
 import com.server.edge.gallery.ui.common.rememberDelayedAnimationProgress
 import com.server.edge.gallery.ui.theme.bodyLargeNarrow
 import com.server.edge.gallery.ui.theme.headlineLargeMedium
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGModelList"
 private val CONTENT_ANIMATION_OFFSET = 16.dp
@@ -147,7 +148,7 @@ fun ModelList(
   val filterOptions = listOf("All", "Downloaded", "Media", "Custom")
 
   // Get download statuses from ViewModel for "Downloaded" filter
-  val uiState by modelManagerViewModel.uiState.collectAsState()
+  val uiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val downloadStatuses = uiState.modelDownloadStatus
   val defaultExpandedModelName by remember(uiState.selectedModel, uiState.modelInitializationStatus, task) {
     derivedStateOf {

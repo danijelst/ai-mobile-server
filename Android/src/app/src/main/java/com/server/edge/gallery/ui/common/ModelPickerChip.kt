@@ -65,6 +65,7 @@ import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.ui.common.modelitem.StatusIcon
 import com.server.edge.gallery.ui.modelmanager.ModelInitializationStatusType
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +78,7 @@ fun ModelPickerChip(
 ) {
   var showModelPicker by remember { mutableStateOf(false) }
   var modelPickerModel by remember { mutableStateOf<Model?>(null) }
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
   val density = LocalDensity.current
   val windowInfo = LocalWindowInfo.current

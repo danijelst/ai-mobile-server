@@ -58,6 +58,7 @@ import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.customColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGLlmSingleTurnScreen"
 
@@ -69,8 +70,8 @@ fun LlmSingleTurnScreen(
   viewModel: LlmSingleTurnViewModel = hiltViewModel(),
 ) {
   val task = modelManagerViewModel.getTaskById(id = BuiltInTaskId.LLM_PROMPT_LAB) ?: return
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
-  val uiState by viewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val selectedModel = modelManagerUiState.selectedModel
   val scope = rememberCoroutineScope()
   val context = LocalContext.current

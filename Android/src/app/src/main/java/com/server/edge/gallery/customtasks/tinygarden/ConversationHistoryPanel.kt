@@ -55,6 +55,7 @@ import com.server.edge.gallery.ui.common.chat.MessageBodyWarning
 import com.server.edge.gallery.ui.common.chat.MessageBubbleShape
 import com.server.edge.gallery.ui.common.chat.MessageSender
 import com.server.edge.gallery.ui.theme.customColors
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /** A panel to show the conversation history. */
 @Composable
@@ -64,7 +65,7 @@ fun ConversationHistoryPanel(
   viewModel: TinyGardenViewModel,
   onDismiss: () -> Unit,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val listState = rememberScrollState()
 
   Column(

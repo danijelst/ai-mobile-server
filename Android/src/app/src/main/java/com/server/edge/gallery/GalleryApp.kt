@@ -54,6 +54,7 @@ import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.navigation.GalleryNavHost
 import com.server.edge.gallery.ui.server.ServerScreen
 import com.server.edge.gallery.ui.home.SettingsScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private data class BottomNavItem(
     val label: String,
@@ -91,7 +92,7 @@ fun GalleryApp(
   modelManagerViewModel: ModelManagerViewModel,
 ) {
   var selectedTab by remember { mutableIntStateOf(0) }
-  val openServerScreenRequest by OpenAiServerState.openServerScreenRequest.collectAsState()
+  val openServerScreenRequest by OpenAiServerState.openServerScreenRequest.collectAsStateWithLifecycle()
 
   LaunchedEffect(openServerScreenRequest) {
       if (openServerScreenRequest != 0L) {
