@@ -716,7 +716,7 @@ fun OpenAiServerPanel() {
       ) {
         Text("Local URL: $localUrl", style = MaterialTheme.typography.bodySmall)
         Button(
-          onClick = { localUrl?.let { clipboardManager.setText(AnnotatedString(it)) } },
+          onClick = { localUrl?.let { clipboardManager.set(AnnotatedString(it)) } },
           contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
           modifier = Modifier.height(32.dp),
         ) {
@@ -747,7 +747,7 @@ fun OpenAiServerPanel() {
 
       if (publicUrl != null) {
         Button(
-          onClick = { publicUrl?.let { clipboardManager.setText(AnnotatedString(it)) } },
+          onClick = { publicUrl?.let { clipboardManager.set(AnnotatedString(it)) } },
           modifier = Modifier.fillMaxWidth(),
         ) {
           Text("Copy Public URL")
