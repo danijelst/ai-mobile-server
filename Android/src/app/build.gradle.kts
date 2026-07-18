@@ -58,7 +58,6 @@ android {
   buildTypes {
     debug {
       isMinifyEnabled = false
-      enableUnitTestCoverage = true
     }
     release {
       isMinifyEnabled = true
@@ -103,6 +102,10 @@ android {
     disable += "SetJavaScriptEnabled"
     disable += "InsecureBaseConfiguration"
     disable += "UnsafeNativeCodeLocation"
+  }
+
+  testCoverage {
+    jacocoVersion = "0.8.12"
   }
 }
 

@@ -80,14 +80,14 @@ jobs:
 
       - name: Decode keystore
         run: |
-          mkdir -p Android/src/keystore
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > Android/src/keystore/release.keystore
+          mkdir -p keystore
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore/release.keystore
         shell: bash
 
       - name: Assemble release (signed)
         run: ./gradlew assembleRelease --build-cache
         env:
-          KEYSTORE_PATH: Android/src/keystore/release.keystore
+          KEYSTORE_PATH: ${{ github.workspace }}/Android/src/keystore/release.keystore
 
       - name: Upload signed APK
         uses: actions/upload-artifact@v4
