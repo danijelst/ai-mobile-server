@@ -25,7 +25,6 @@ plugins {
   alias(libs.plugins.ksp)
   jacoco
 }
-
 android {
   namespace = "com.server.edge.gallery"
   compileSdk = 35
@@ -59,7 +58,6 @@ android {
   buildTypes {
     debug {
       isMinifyEnabled = false
-      enableUnitTestCoverage = true
     }
     release {
       isMinifyEnabled = true
