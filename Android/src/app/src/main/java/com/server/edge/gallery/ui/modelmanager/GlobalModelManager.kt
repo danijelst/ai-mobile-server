@@ -86,7 +86,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -716,7 +716,7 @@ fun OpenAiServerPanel() {
       ) {
         Text("Local URL: $localUrl", style = MaterialTheme.typography.bodySmall)
         Button(
-          onClick = { localUrl?.let { clipboardManager.set(AnnotatedString(it)) } },
+          onClick = { localUrl?.let { clipboardManager.setText(AnnotatedString(it)) } },
           contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
           modifier = Modifier.height(32.dp),
         ) {
@@ -747,7 +747,7 @@ fun OpenAiServerPanel() {
 
       if (publicUrl != null) {
         Button(
-          onClick = { publicUrl?.let { clipboardManager.set(AnnotatedString(it)) } },
+          onClick = { publicUrl?.let { clipboardManager.setText(AnnotatedString(it)) } },
           modifier = Modifier.fillMaxWidth(),
         ) {
           Text("Copy Public URL")
