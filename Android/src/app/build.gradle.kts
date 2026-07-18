@@ -23,6 +23,7 @@ plugins {
   alias(libs.plugins.hilt.application)
   alias(libs.plugins.oss.licenses)
   alias(libs.plugins.ksp)
+  jacoco
 }
 
 android {
@@ -58,7 +59,6 @@ android {
   buildTypes {
     debug {
       isMinifyEnabled = false
-      enableUnitTestCoverage = true
     }
     release {
       isMinifyEnabled = true
@@ -103,6 +103,11 @@ android {
     disable += "SetJavaScriptEnabled"
     disable += "InsecureBaseConfiguration"
     disable += "UnsafeNativeCodeLocation"
+  }
+
+  coverage {
+    enableUnitTestCoverage = true
+    jacocoVersion = "0.8.12"
   }
 }
 
@@ -171,11 +176,7 @@ protobuf {
   generateProtoTasks { all().forEach { it.plugins { create("java") { option("lite") } } } }
 }
 
-// JaCoCo coverage configuration
-jacoco {
-  toolVersion = "0.8.12"
-}
-
+// JaCoCo coverage task
 tasks.register("jacocoTestReport", JacocoReport::class) {
   dependsOn("test")
 
