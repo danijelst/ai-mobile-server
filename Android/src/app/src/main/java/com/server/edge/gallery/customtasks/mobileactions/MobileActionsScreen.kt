@@ -132,6 +132,7 @@ import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.google.ai.edge.litertlm.ToolProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGMAScreen"
 
@@ -288,11 +289,11 @@ fun MainUi(
   holdToDictateViewModel: HoldToDictateViewModel = hiltViewModel(),
   onProcessingStarted: () -> Unit,
 ) {
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val model = modelManagerUiState.selectedModel
   val initialModelConfigValues = remember { model.configValues }
-  val holdToDictateUiState by holdToDictateViewModel.uiState.collectAsState()
-  val uiState by viewModel.uiState.collectAsState()
+  val holdToDictateUiState by holdToDictateViewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   var curAmplitude by remember { mutableIntStateOf(0) }
   var clearInputTextTrigger by remember { mutableLongStateOf(0L) }
   var selectedTabIndex by remember { mutableIntStateOf(0) }

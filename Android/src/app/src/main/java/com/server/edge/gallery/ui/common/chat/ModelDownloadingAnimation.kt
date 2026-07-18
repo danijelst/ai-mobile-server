@@ -41,6 +41,7 @@ import com.server.edge.gallery.ui.common.formatToHourMinSecond
 import com.server.edge.gallery.ui.common.humanReadableSize
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.labelSmallNarrow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /**
  * Composable function to display a loading animation using a 2x2 grid of images with a synchronized
@@ -52,7 +53,7 @@ fun ModelDownloadingAnimation(
   task: Task,
   modelManagerViewModel: ModelManagerViewModel,
 ) {
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val downloadStatus by remember {
     derivedStateOf { modelManagerUiState.modelDownloadStatus[model.name] }
   }

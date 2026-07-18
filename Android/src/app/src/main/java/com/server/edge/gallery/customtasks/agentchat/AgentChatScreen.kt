@@ -103,6 +103,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONObject
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGAgentChatScreen"
 private val chatViewJavascriptInterface = ChatWebViewJavascriptInterface()
@@ -369,8 +370,8 @@ fun AgentChatScreen(
       )
     },
     emptyStateComposable = { model ->
-      val uiState by viewModel.uiState.collectAsState()
-      val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+      val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+      val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
       val modelInitializationStatus = modelManagerUiState.modelInitializationStatus[model.name]
       Box(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(

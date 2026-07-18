@@ -112,6 +112,7 @@ import com.server.edge.gallery.ui.theme.customColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private enum class AddSkillOptionType {
   FeaturedList,
@@ -154,7 +155,7 @@ fun SkillManagerBottomSheet(
   skillManagerViewModel: SkillManagerViewModel,
   onDismiss: (selectedSkillsChanged: Boolean) -> Unit,
 ) {
-  val uiState by skillManagerViewModel.uiState.collectAsState()
+  val uiState by skillManagerViewModel.uiState.collectAsStateWithLifecycle()
   val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
   val scope = rememberCoroutineScope()
   var showAddSkillFromUrlDialog by remember { mutableStateOf(false) }

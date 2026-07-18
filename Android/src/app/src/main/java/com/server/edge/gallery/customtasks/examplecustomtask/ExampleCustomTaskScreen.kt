@@ -54,6 +54,7 @@ import com.server.edge.gallery.data.ConfigKey
 import com.server.edge.gallery.data.NumberSliderConfig
 import com.server.edge.gallery.data.ValueType
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 data class ExampleCustomTaskModelInstance(val content: String)
 
@@ -105,9 +106,9 @@ fun ExampleCustomTaskScreen(
   viewModel: ExampleCustomTaskViewModel = hiltViewModel(),
 ) {
   val colors = listOf(MaterialTheme.colorScheme.onSurface, Color.Red, Color.Green, Color.Blue)
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val model = modelManagerUiState.selectedModel
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val textColor = uiState.textColor
 
   // Get the current font size value from config.

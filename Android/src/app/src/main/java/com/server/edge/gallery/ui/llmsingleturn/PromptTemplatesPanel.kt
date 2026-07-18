@@ -99,6 +99,7 @@ import com.server.edge.gallery.ui.theme.bodyLargeNarrow
 import com.server.edge.gallery.ui.theme.customColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private val promptTemplateTypes: List<PromptTemplateType> = PromptTemplateType.entries
 private val TAB_TITLES = PromptTemplateType.entries.map { it.label }
@@ -117,8 +118,8 @@ fun PromptTemplatesPanel(
   modifier: Modifier = Modifier,
 ) {
   val scope = rememberCoroutineScope()
-  val uiState by viewModel.uiState.collectAsState()
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val selectedPromptTemplateType = uiState.selectedPromptTemplateType
   val inProgress = uiState.inProgress
   var selectedTabIndex by remember { mutableIntStateOf(0) }

@@ -86,6 +86,7 @@ import com.server.edge.gallery.R
 import com.server.edge.gallery.ui.theme.customColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGAddOrEditSkill"
 private const val DEFAULT_SCRIPT_NAME = "index.html"
@@ -124,7 +125,7 @@ fun AddOrEditSkillBottomSheet(
   onDismiss: () -> Unit,
   onSuccess: () -> Unit,
 ) {
-  val uiState by skillManagerViewModel.uiState.collectAsState()
+  val uiState by skillManagerViewModel.uiState.collectAsStateWithLifecycle()
   var cancelClicked by remember { mutableStateOf(false) }
   val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
   var skill by remember { mutableStateOf(uiState.skills.getOrNull(skillIndex)?.skill) }

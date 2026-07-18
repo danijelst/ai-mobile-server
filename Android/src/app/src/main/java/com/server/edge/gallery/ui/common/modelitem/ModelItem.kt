@@ -69,6 +69,7 @@ import com.server.edge.gallery.ui.common.tos.TosViewModel
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.bodyMediumMedium
 import com.server.edge.gallery.ui.theme.customColors
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /**
  * Composable function to display a model item in the model manager list.
@@ -94,7 +95,7 @@ fun ModelItem(
   modelVariants: List<Model> = listOf(),
   tosViewModel: TosViewModel? = null,
 ) {
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val downloadStatus = modelManagerUiState.modelDownloadStatus[model.name]
 
   var isExpanded by remember(model.name) { mutableStateOf(expanded ?: false) }

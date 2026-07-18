@@ -108,6 +108,7 @@ import kotlin.text.endsWith
 import kotlin.text.lowercase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGGlobalMM"
 
@@ -120,7 +121,7 @@ fun GlobalModelManager(
   onBenchmarkClicked: (Model) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   val builtInModels = remember { mutableStateListOf<Model>() }
   val importedModels = remember { mutableStateListOf<Model>() }
   val taskCandidates = remember { mutableStateListOf<Task>() }
@@ -667,9 +668,9 @@ private fun getFileName(context: Context, uri: Uri): String? {
 @Composable
 fun OpenAiServerPanel() {
   val context = LocalContext.current
-  val isRunning by OpenAiServerService.isRunning.collectAsState()
-  val localUrl by OpenAiServerService.localUrl.collectAsState()
-  val publicUrl by OpenAiServerService.publicUrl.collectAsState()
+  val isRunning by OpenAiServerService.isRunning.collectAsStateWithLifecycle()
+  val localUrl by OpenAiServerService.localUrl.collectAsStateWithLifecycle()
+  val publicUrl by OpenAiServerService.publicUrl.collectAsStateWithLifecycle()
   val clipboardManager = LocalClipboardManager.current
   var useTunnel by remember { mutableStateOf(false) }
 

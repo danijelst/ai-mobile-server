@@ -64,6 +64,7 @@ import com.server.edge.gallery.ui.common.MarkdownText
 import com.server.edge.gallery.ui.common.chat.MessageBodyLoading
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGResponsePanel"
 
@@ -76,8 +77,8 @@ fun ResponsePanel(
   modelManagerViewModel: ModelManagerViewModel,
   modifier: Modifier = Modifier,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   val inProgress = uiState.inProgress
   val initializing = uiState.preparing
   val selectedPromptTemplateType = uiState.selectedPromptTemplateType

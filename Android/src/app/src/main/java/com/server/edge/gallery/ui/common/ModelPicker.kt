@@ -58,6 +58,7 @@ import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.ui.common.modelitem.StatusIcon
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.labelSmallNarrow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ModelPicker(
@@ -65,7 +66,7 @@ fun ModelPicker(
   modelManagerViewModel: ModelManagerViewModel,
   onModelSelected: (Model) -> Unit,
 ) {
-  val modelManagerUiState by modelManagerViewModel.uiState.collectAsState()
+  val modelManagerUiState by modelManagerViewModel.uiState.collectAsStateWithLifecycle()
   var showMemoryWarning by remember { mutableStateOf(false) }
   var modelToPick by remember { mutableStateOf<Model?>(null) }
   val context = LocalContext.current

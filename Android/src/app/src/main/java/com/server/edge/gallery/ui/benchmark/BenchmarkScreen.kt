@@ -78,6 +78,7 @@ import com.server.edge.gallery.ui.common.ConfigEditorsPanel
 import com.server.edge.gallery.ui.common.SMALL_BUTTON_CONTENT_PADDING
 import com.server.edge.gallery.ui.modelmanager.ModelManagerViewModel
 import com.server.edge.gallery.ui.theme.customColors
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,7 +89,7 @@ fun BenchmarkScreen(
   viewModel: BenchmarkViewModel = hiltViewModel(),
   onBackClicked: () -> Unit,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
   var enableBackButton by remember { mutableStateOf(true) }
   var showRunBenchmarkConfirmationDialog by remember { mutableStateOf(false) }
   val downloadedLlmModelNames = remember {

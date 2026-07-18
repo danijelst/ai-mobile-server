@@ -55,6 +55,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.server.edge.gallery.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGAddSkillFromLocalImportDialog"
 
@@ -64,7 +65,7 @@ fun AddSkillFromLocalImportDialog(
   onDismissRequest: () -> Unit,
   onSuccess: () -> Unit,
 ) {
-  val uiState by skillManagerViewModel.uiState.collectAsState()
+  val uiState by skillManagerViewModel.uiState.collectAsStateWithLifecycle()
   val validating = uiState.validating
   val validationError = uiState.validationError
   val directoryUri = uiState.importDirectoryUri

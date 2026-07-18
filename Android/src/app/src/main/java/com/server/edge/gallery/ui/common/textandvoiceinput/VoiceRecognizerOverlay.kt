@@ -42,6 +42,7 @@ import com.server.edge.gallery.R
 import com.server.edge.gallery.data.Task
 import com.server.edge.gallery.ui.common.AudioAnimation
 import com.server.edge.gallery.ui.common.getTaskBgGradientColors
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 private const val TAG = "AGVROverlay"
 
@@ -58,7 +59,7 @@ fun VoiceRecognizerOverlay(
   curAmplitude: Int,
   modifier: Modifier = Modifier,
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
     // Audio level animation.
