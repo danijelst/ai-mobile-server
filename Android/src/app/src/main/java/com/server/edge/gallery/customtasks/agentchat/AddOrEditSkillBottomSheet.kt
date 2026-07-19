@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.server.edge.gallery.customtasks.agentchat
 
 import android.util.Log
@@ -117,7 +119,6 @@ private val OUTPUT_DATA_PLACEHOLDER =
     .trimIndent()
 
 /** A ModalBottomSheet Composable for creating a new skill from manual input. */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddOrEditSkillBottomSheet(
   skillManagerViewModel: SkillManagerViewModel,
@@ -468,7 +469,6 @@ fun AddOrEditSkillBottomSheet(
 }
 
 /** Composable for the "Scripts" tab content. */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ScriptsTabContent(
   scope: CoroutineScope,

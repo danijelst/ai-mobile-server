@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalApi::class)
+
 package com.server.edge.gallery.ui.llmchat
 
 import android.content.Context
@@ -56,7 +58,6 @@ object LlmChatModelHelper : LlmModelHelper {
   // Indexed by model name.
   private val cleanUpListeners: MutableMap<String, CleanUpListener> = mutableMapOf()
 
-  @OptIn(ExperimentalApi::class) // opt-in experimental flags
   override fun initialize(
     context: Context,
     model: Model,
@@ -153,7 +154,6 @@ object LlmChatModelHelper : LlmModelHelper {
     onDone("")
   }
 
-  @OptIn(ExperimentalApi::class) // opt-in experimental flags
   override fun resetConversation(
     model: Model,
     supportImage: Boolean,

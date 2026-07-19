@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+
 package com.server.edge.gallery.customtasks.agentchat
 
 import android.os.Bundle
@@ -148,7 +150,6 @@ val BUTTON_CONTENT_PADDING = PaddingValues(start = 12.dp, top = 2.dp, end = 12.d
 
 private const val TAG = "AGSkillManagerBottomSheet"
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun SkillManagerBottomSheet(
   agentTools: AgentTools,
@@ -765,7 +766,6 @@ fun SkillManagerBottomSheet(
   }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SkillItemRow(
   skillState: SkillState,
@@ -948,7 +948,6 @@ private fun scrollToBottomOfList(scope: CoroutineScope, listState: LazyListState
   }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AddSkillOptionsBottomSheet(
   onDismiss: () -> Unit,

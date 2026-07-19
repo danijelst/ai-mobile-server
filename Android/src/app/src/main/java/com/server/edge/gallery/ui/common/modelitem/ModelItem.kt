@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.server.edge.gallery.ui.common.modelitem
 
 import androidx.compose.animation.AnimatedContent
@@ -78,7 +80,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
  * status, and providing action buttons. It supports expanding to show a model description and
  * buttons for learning more (opening a URL) and downloading/trying the model.
  */
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ModelItem(
   model: Model,
@@ -404,7 +405,6 @@ private fun CapabilityChip(
  * Composable for displaying the header of a model variant item, including name, status, and action
  * menu.
  */
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ModelVariantHeader(
   variantModel: Model,
