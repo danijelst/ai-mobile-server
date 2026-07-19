@@ -82,6 +82,13 @@
 # ---- Jetpack Compose ----
 -dontwarn androidx.compose.**
 
+# ---- R8 Kotlin metadata compatibility ----
+# Suppress R8 warnings about Kotlin metadata parsing failures. Kotlin 2.2.0 emits a
+# metadata format that the R8 version bundled with AGP 8.8.2 cannot parse for some
+# libraries (Ktor, Moshi, etc.). These warnings are non-fatal and do not affect
+# correct operation.
+-dontwarn kotlin.metadata.**
+
 # ---- General safety net ----
 -dontwarn org.bouncycastle.**
 -dontwarn org.conscrypt.**

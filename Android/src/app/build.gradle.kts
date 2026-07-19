@@ -23,9 +23,8 @@ plugins {
   alias(libs.plugins.hilt.application)
   alias(libs.plugins.oss.licenses)
   alias(libs.plugins.ksp)
-  kotlin("kapt")
+  jacoco
 }
-
 android {
   namespace = "com.server.edge.gallery"
   compileSdk = 35
@@ -46,12 +45,25 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
+  signingConfigs {
+    create("release") {
+      storeFile = System.getenv("KEYSTORE_PATH")?.let(::file)
+        ?: file("../keystore/release.keystore")
+      storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+      keyAlias = System.getenv("KEY_ALIAS") ?: ""
+      keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+    }
+  }
+
   buildTypes {
+    debug {
+      isMinifyEnabled = false
+    }
     release {
       isMinifyEnabled = true
       isShrinkResources = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-      signingConfig = signingConfigs.getByName("debug")
+      signingConfig = signingConfigs.findByName("release")
     }
   }
 
@@ -91,6 +103,15 @@ android {
     disable += "InsecureBaseConfiguration"
     disable += "UnsafeNativeCodeLocation"
   }
+
+  testCoverage {
+    jacocoVersion = "0.8.12"
+  }
+}
+
+// JaCoCo coverage configuration
+jacoco {
+  toolVersion = "0.8.12"
 }
 
 dependencies {
@@ -137,7 +158,7 @@ dependencies {
   implementation(libs.ktor.server.content.negotiation)
   implementation(libs.ktor.serialization.kotlinx.json)
   implementation(libs.ktor.server.cors)
-  kapt(libs.hilt.android.compiler)
+  ksp(libs.hilt.android.compiler)
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.mockk)
@@ -156,5 +177,39 @@ dependencies {
 protobuf {
   protoc { artifact = "com.google.protobuf:protoc:4.26.1" }
   generateProtoTasks { all().forEach { it.plugins { create("java") { option("lite") } } } }
+}
+
+// JaCoCo coverage task
+tasks.register("jacocoTestReport", JacocoReport::class) {
+  dependsOn("test")
+
+  reports {
+    xml.required.set(true)
+    html.required.set(true)
+    csv.required.set(false)
+  }
+
+  val fileFilter = listOf(
+    "**/R.class",
+    "**/R$*.class",
+    "**/BuildConfig.*",
+    "**/Manifest*.*",
+    "**/*Test*.*",
+    "android/**/*.*"
+  )
+  val debugTree = fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
+    exclude(fileFilter)
+  }
+  val mainSrc = "$projectDir/src/main/java"
+
+  sourceDirectories.setFrom(files(mainSrc))
+  classDirectories.setFrom(files(debugTree))
+  executionData.setFrom(fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage/debug")))
+
+  doFirst {
+    executionData.setFrom(
+      fileTree(layout.buildDirectory.dir("outputs/unit_test_code_coverage/debug"))
+    )
+  }
 }
 

@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
 
     intent.extras?.let { extras ->
       for (key in extras.keySet()) {
-        Log.d(TAG, "onCreate Extra -> Key: $key, Value: ${extras.get(key)}")
+        Log.d(TAG, "onCreate Extra -> Key: $key, Value: ${extras.getString(key)}")
       }
     }
 
@@ -201,7 +201,7 @@ class MainActivity : ComponentActivity() {
 
     intent.extras?.let { extras ->
       for (key in extras.keySet()) {
-        Log.d(TAG, "onNewIntent Extra -> Key: $key, Value: ${extras.get(key)}")
+        Log.d(TAG, "onNewIntent Extra -> Key: $key, Value: ${extras.getString(key)}")
       }
     }
 
