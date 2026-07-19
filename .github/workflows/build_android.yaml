@@ -27,12 +27,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Run Android lint
         run: ./gradlew lint --build-cache
       - name: Upload lint report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: lint-report
           path: Android/src/app/build/reports/lint-results*
@@ -48,20 +48,20 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Run unit tests
         run: ./gradlew test --continue --build-cache
       - name: Generate coverage report
         run: ./gradlew jacocoTestReport --build-cache
       - name: Upload unit test coverage
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: Android/src/app/build/reports/jacoco/
       - name: Upload test report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results
           path: Android/src/app/build/reports/tests/
@@ -82,7 +82,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Decode keystore
         run: |
@@ -96,7 +96,7 @@ jobs:
           KEYSTORE_PATH: ${{ github.workspace }}/Android/src/keystore/release.keystore
 
       - name: Upload signed APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: signed-apk
           path: Android/src/app/build/outputs/apk/
@@ -113,7 +113,7 @@ jobs:
         working-directory: .
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: signed-apk
       - name: Extract version name
