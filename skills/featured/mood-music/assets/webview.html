@@ -299,8 +299,22 @@ limitations under the License.
 
     <script>
       const params = new URLSearchParams(window.location.search);
-      const audioUrl = params.get("url");
+      const rawAudioUrl = params.get("url");
       const genre = params.get("genre") || "Ambient";
+
+      // Validate URL to prevent XSS and open redirect
+      let audioUrl = null;
+      if (rawAudioUrl) {
+        try {
+          const parsed = new URL(rawAudioUrl);
+          // Only allow https:// audio sources
+          if (parsed.protocol === "https:") {
+            audioUrl = rawAudioUrl;
+          }
+        } catch (_) {
+          // Invalid URL — fall back to demo
+        }
+      }
 
       const player = document.getElementById("player");
       const title = document.getElementById("track-title");
@@ -314,14 +328,14 @@ limitations under the License.
       const totalTimeEl = document.getElementById("total-time");
 
       title.textContent = `Vibe: ${genre}`;
-      statusText.textContent = audioUrl ? "Ready to play" : "Demo Track (No URL provided)";
 
       if (audioUrl) {
         audio.src = audioUrl;
+        statusText.textContent = "Ready to play";
       } else {
-        // Fallback for demo if no URL is provided
+        // Fallback for demo if no URL is provided or URL was invalid
         audio.src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-        title.textContent = `Vibe: Demo (Fallback)`;
+        title.textContent = "Vibe: Demo (Fallback)";
         statusText.textContent = "Playing Demo Stream";
       }
 
