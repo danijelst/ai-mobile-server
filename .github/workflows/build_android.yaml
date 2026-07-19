@@ -3,8 +3,14 @@ name: CI
 on:
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'Android/**'
+      - '.github/workflows/**'
   push:
     branches: [ "main" ]
+    paths:
+      - 'Android/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 defaults:
@@ -12,7 +18,7 @@ defaults:
     working-directory: ./Android/src
 
 env:
-  GRADLE_OPTS: -Dorg.gradle.parallel=true -Dorg.gradle.daemon=true -Dorg.gradle.jvmargs="-Xmx2g -Xms1g -XX:MaxMetaspaceSize=512m"
+  GRADLE_OPTS: -Dorg.gradle.parallel=true -Dorg.gradle.daemon=true -Dorg.gradle.jvmargs="-Xmx4g -Xms2g -XX:MaxMetaspaceSize=512m"
   GRADLE_USER_HOME: ~/.gradle
 
 jobs:
@@ -51,14 +57,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
       - name: Run unit tests
         run: ./gradlew test --continue --build-cache
-      - name: Generate coverage report
-        run: ./gradlew jacocoTestReport --build-cache
-      - name: Upload unit test coverage
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: coverage-report
-          path: Android/src/app/build/reports/jacoco/
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v7
