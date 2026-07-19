@@ -116,6 +116,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: signed-apk
+          path: Android/src/app/build/outputs/apk/
       - name: Extract version name
         run: |
           VERSION=$(grep 'versionName' Android/src/app/build.gradle.kts \
